@@ -25,6 +25,14 @@
     },
     "web": {
       "favicon": "./assets/favicon.png"
-    }
+    },
+    "plugins": [
+      [
+        "expo-local-authentication",
+        {
+          "faceIDPermission": "FaceID is used to authenticate the user to use the app every time the app opens."
+        }
+      ]
+    ]
   }
 }
