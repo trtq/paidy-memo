@@ -1,19 +1,20 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { FlashList, FlashListRef } from '@shopify/flash-list';
-import React, { useCallback, useEffect, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import {
   StyleSheet,
   TouchableOpacity,
   View,
   Text,
   Alert,
-  LayoutAnimation,
   TouchableWithoutFeedback,
 } from 'react-native';
 import { EditMemoModal } from './EditMemoModal';
 import { Header } from './Header';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import Animated, { SlideInRight } from 'react-native-reanimated';
+import Animated, {
+  SequencedTransition,
+  SlideInRight,
+} from 'react-native-reanimated';
 import { StatusBar } from 'expo-status-bar';
 
 type TMemo = {
@@ -35,8 +36,6 @@ const dummyMemos: TMemo[] = [
 // Main component for the list - creating, editing, showing the memos.
 export const MemoList = () => {
   const insets = useSafeAreaInsets();
-  // list Ref - used for pretty deletion animation
-  const list = useRef<FlashListRef<TMemo> | null>(null);
 
   // local copy of the memo list
   const [memos, setMemos] = useState<TMemo[]>([]);
@@ -77,16 +76,13 @@ export const MemoList = () => {
     }
   }, []);
 
-  // removes an items - used in a way suggested by FlashList so that there would be a pretty animation
+  // removes an items
   const removeItem = (memo: TMemo) => {
     setNewMemosAndSave(
       memos.filter((dataItem) => {
         return dataItem !== memo;
       }),
     );
-    // animation logic
-    list.current?.prepareForLayoutAnimationRender();
-    LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
   };
 
   // creates a new memo or edits an old one
@@ -130,8 +126,8 @@ export const MemoList = () => {
     >
       <StatusBar style={isEditModalShown ? 'light' : 'dark'} />
       <Header onButton={() => setIsEditModalShown(true)} />
-      <FlashList
-        ref={list}
+      <Animated.FlatList
+        itemLayoutAnimation={SequencedTransition}
         keyExtractor={(item) => {
           return item.date.toString();
         }}
