@@ -17,7 +17,11 @@ export const Header = ({ onButton }: TTopBumper) => {
       ]}
     >
       <Text style={styles.appName}>PAIDY MEMO</Text>
-      <TouchableOpacity style={styles.addMemoCircle} onPress={onButton}>
+      <TouchableOpacity
+        testID="addButton"
+        style={styles.addMemoCircle}
+        onPress={onButton}
+      >
         <Text style={styles.addMemoInside}>+</Text>
       </TouchableOpacity>
     </View>

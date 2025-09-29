@@ -54,13 +54,16 @@ export const EditMemoModal = ({
             autoFocus
             style={styles.modalInput}
             value={memoEditText}
+            testID="memoTextInput"
           />
           <TouchableOpacity
             style={[styles.modalSaveButton, !memoEditText && { opacity: 0.5 }]}
             disabled={!memoEditText}
             onPress={onSave}
           >
-            <Text style={styles.modalButtonText}>Save</Text>
+            <Text testID="memoEditSave" style={styles.modalButtonText}>
+              Save
+            </Text>
           </TouchableOpacity>
         </View>
       </KeyboardAvoidingView>

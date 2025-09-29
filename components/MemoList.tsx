@@ -24,7 +24,7 @@ type TMemo = {
 };
 
 // some dummy data for a good first impression
-const dummyMemos: TMemo[] = [
+export const dummyMemos: TMemo[] = [
   { done: false, date: new Date('01-01-2025'), text: 'Feed the dog' },
   { done: true, date: new Date('02-01-2025'), text: 'Play videogames' },
   { done: true, date: new Date('06-01-2025'), text: 'Go to a gallery' },
@@ -50,7 +50,9 @@ export const MemoList = () => {
   useEffect(() => {
     const fetchMemosData = async () => {
       try {
+        console.log('fetchMemosData', 0);
         const value = await AsyncStorage.getItem('paidyMemos');
+        console.log('fetchMemosData 1', value);
         if (value !== null) {
           setMemos(JSON.parse(value) || []);
         } else {
@@ -127,6 +129,7 @@ export const MemoList = () => {
       <StatusBar style={isEditModalShown ? 'light' : 'dark'} />
       <Header onButton={() => setIsEditModalShown(true)} />
       <Animated.FlatList
+        testID={'memoFlatList'}
         itemLayoutAnimation={SequencedTransition}
         keyExtractor={(item) => {
           return item.date.toString();
@@ -146,12 +149,13 @@ export const MemoList = () => {
                   {item?.done && <Text style={styles.memoDoneText}>✔</Text>}
                 </View>
               </TouchableWithoutFeedback>
-              <Text numberOfLines={1} style={styles.memoText}>
+              <Text numberOfLines={1} style={styles.memoText} testID="memoText">
                 {item?.text}
               </Text>
               <TouchableOpacity
                 onPress={() => removeItem(item)}
                 style={styles.memoDelTouchable}
+                testID="memoDel"
               >
                 <Text style={styles.memoDelText}>❌</Text>
               </TouchableOpacity>
