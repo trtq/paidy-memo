@@ -27,7 +27,8 @@ Here are all the libraries I used:
   
 - **Unit tests**
   
-  Unit tests are my big weakness, I never worked with them in professional capacity, unfortunately. I did some very basic tests - that the memos load correctly, that they are added and deleted, and all of it is shown to the user. But, even with how basic these are, i can tell that they are a bit awkward and a far from what professional work should be. I would love to learn more about these and get better.
+  Unit test are not one of my strengths, but even though I don't have much professional experience, I've written basic unit tests.
+  
 - **No global state**
   
   The assignment reads:
